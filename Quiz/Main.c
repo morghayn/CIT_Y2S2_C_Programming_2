@@ -12,18 +12,21 @@ int main(void)
 
 		//char* buffer;
 		//buffer = _getcwd(NULL, 0); // get the current directory
+		//buffer = (char*)realloc(buffer, 25);
+		//strcat(buffer, "test");
+		//printf(buffer);
+
+
+		//char* clue = malloc(3 * sizeof(char));
+		//clue[2] = '\0';
+		//printf("\nsize of clue:%d\n", strlen(clue));
 
 
 
-		char* clue = malloc(3 * sizeof(char));
-		clue[2] = '\0';
-		printf("\nsize of clue:%d\n", strlen(clue));
-
-
-
-		//char* buffertwo = (char*)malloc(46 * sizeof(char));
+		
 		//strcat(buffertwo, buffer);
-		//read_file(char* strcat(char* buffer, "/test"));
+		//read_file("test");
+		str_split();
 
 
 		//printf(buffer);
@@ -66,6 +69,19 @@ void read_file(const char* filepath)
 	}
 
 	free(line);    // dont forget to free heap memory
+}
+
+// Got from https://stackoverflow.com/questions/9210528/split-string-with-delimiters-in-c will learn code and work out a problem to fit my thing
+void str_split()
+{
+		char st[] = "Hello world? No";
+		char* ch;
+		ch = strtok(st, "?");
+		while (ch != NULL) {
+			printf("%s\n", ch);
+			ch = strtok(NULL, " ,"); // what does strtok do
+		}
+		//getch();
 }
 
 void print_question_quantity()
