@@ -7,16 +7,14 @@
 
 struct node
 {
-	char* str;
-	struct node* next;
+	char* string;
+	struct node* head;
 };
 
 struct node* insert_front(struct node* head, char* str);
 struct node* create_node(char* str);
 
-void release_nodes(struct node* head);
 void print_nodes(struct node* head);
-
-int is_word_doop(struct node* head, char* word);
+void release_nodes(struct node* head);
 
 #endif

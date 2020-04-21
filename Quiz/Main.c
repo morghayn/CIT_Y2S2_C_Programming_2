@@ -1,5 +1,4 @@
-﻿#include <stdio.h>
-#include <queue.h>
+﻿#include "main.h"
 
 int main(void)
 {	
@@ -7,15 +6,33 @@ int main(void)
 	// Select quiz
 	// Select  
 
-	while (1 == 1)
-	{
-		printf("> 1. Start\n> 2. Quit\n> Input option: ");
+	//while (1 == 1)
+	//{
+		printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option: ");
 
+		//char* buffer;
+		//buffer = _getcwd(NULL, 0); // get the current directory
+
+
+
+		char* clue = malloc(3 * sizeof(char));
+		clue[2] = '\0';
+		printf("\nsize of clue:%d\n", strlen(clue));
+
+
+
+		//char* buffertwo = (char*)malloc(46 * sizeof(char));
+		//strcat(buffertwo, buffer);
+		//read_file(char* strcat(char* buffer, "/test"));
+
+
+		//printf(buffer);
 		//printf("> Hello and welcome to the Quiz game\n");
 		//printf("> Please enter a number between 1 and 6: \n");
 		//printf("> Start?\n");
+		printf("\n");
 		system("pause");
-	}
+	//}
 
 	return 0;
 }
@@ -26,9 +43,29 @@ void random()
 }
 
 // initiation
-void load_question_file()
+void read_file(const char* filepath)
 {
-	// load questions from file
+	// open and get the file handle
+	FILE* file;
+	fopen_s(&file, filepath, "r");
+
+	// check whether file exists
+	if (file == NULL)
+	{
+		printf("\n> File does not exist @ %s.\n> Returning to the main menu.", filepath);
+		return;
+	}
+
+	// read lines consecutively
+	const size_t line_size = 300;
+	char* line = malloc(line_size);
+
+	while (fgets(line, line_size, file) != NULL)
+	{
+		printf(line);
+	}
+
+	free(line);    // dont forget to free heap memory
 }
 
 void print_question_quantity()
@@ -39,7 +76,7 @@ void print_question_quantity()
 // start asking questions
 void generate_clue()
 {
-	int difficulty; // (temporary will be in header file)
+	int difficulty = 0; // (temporary will be in header file)
 
 	switch (difficulty)
 	{
@@ -79,7 +116,7 @@ void generate_clue()
 				*/
 				break;
 		default:
-				printf("Something appears to have gone wrong. o,,o")
+			printf("Something appears to have gone wrong. o,,o");
 				break;
 	}
 	// for each question, display a clue (if available, see below); the user has one attempt only, and the program is case insensitive (accepts both lower and upper case answers) 

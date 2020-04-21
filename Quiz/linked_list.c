@@ -1,23 +1,23 @@
 #include "linked_list.h"
 
-struct node* create_node(char* str)
+struct node* create_node(char* string)
 {
 	struct node* temp;
 
 	temp = (struct node*) malloc(sizeof(struct node));
-	temp->str = str;
-	temp->next = NULL;
+	temp->string = string;
+	temp->head = NULL;
 
 	return temp;
 }
 
-struct node* insert_front(struct node* head, char* str)
+struct node* insert_front(struct node* head, char* string)
 {
-	char* new_str = (char*)malloc((strlen(str) + 1) * sizeof(char));
-	strcpy(new_str, str);
+	char* new_str = (char*)malloc((strlen(string) + 1) * sizeof(char));
+	strcpy(new_str, string);
 
 	struct node* temp = create_node(new_str);
-	temp->next = head;
+	temp->head = head;
 
 	return temp;
 }
@@ -26,24 +26,20 @@ void print_nodes(struct node* head)
 {
 	while (head != NULL)
 	{
-		printf(head->str);
-		head = head->next;
+		printf(head->string);
+		head = head->head;
 	}
 }
 
 void release_nodes(struct node* head)
 {
 	struct node* temp;
-	//printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
 	while (head != NULL)
 	{
 		temp = head;
-		head = head->next;
-		free(temp->str);
+		head = head->head;
+		free(temp->string);
 		free(temp);
 	}
-
-	//printf("\n> all nodes have been released.\n");
-	//printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 }
