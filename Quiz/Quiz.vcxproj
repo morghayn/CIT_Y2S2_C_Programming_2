@@ -23,12 +23,17 @@
     <ClCompile Include="linked_list.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="quiz.c" />
+    <ClCompile Include="utility.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="io.h" />
     <ClInclude Include="linked_list.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="quiz.h" />
+    <ClInclude Include="utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -8,9 +8,7 @@
 #include <string.h>
 #include <assert.h>
 
-void random();
-void print_question_quantity();
+void random(int lower, int upper, int count); // To go in a utility class
 void store_results();
-void test();
 
 #endif

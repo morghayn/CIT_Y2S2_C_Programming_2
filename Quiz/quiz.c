@@ -27,21 +27,19 @@ boolean split_question(char line[], char* array[])
 
 node* build_quiz(const char* filepath)
 {
-	node* head = NULL;
 	interchange* interchange = NULL;
-	// Open and get the file handle
+	node* head = NULL;
 	FILE* file;
+
 	fopen_s(&file, filepath, "r");
 
-	// Return if file does not exists
 	if (file == NULL)
 	{
 		printf("\n> File does not exist @ %s.\n> Returning to the main menu.", filepath);
 		fclose(file);
-		return;
+		return NULL;
 	}
 
-	// Read lines consecutively
 	const size_t line_size = 300;
 	char* line = malloc(line_size);
 
@@ -60,7 +58,6 @@ node* build_quiz(const char* filepath)
 		}
 	}
 
-	// Free heap memory
 	free(line);
 	fclose(file);
 	return head;
@@ -78,6 +75,7 @@ char* generate_clue(int difficulty)
 		1. No clue is given and only a ‘?’ is shown.
 		Example: What is the capital of France? ?
 		*/
+		clue = "?";
 		break;
 	case 2:
 		/*
@@ -107,6 +105,7 @@ char* generate_clue(int difficulty)
 		/*
 		The type of clue is randomly selected from the 5 types listed above.
 		*/
+		// clue = generate_clue(random(1, 5))
 		break;
 	default:
 		printf("Something appears to have gone wrong. o,,o");
@@ -124,17 +123,18 @@ void print_score()
 void release_quiz(node* head)
 {
 	struct node* temp;
-	printf("\n\n\n> Freeing what needed to be freed....\n");
+	printf("\n\n\n> Freeing what needed to be freed....\n"); // For debug
 	while (head != NULL)
 	{
 		temp = head;
 		head = head->next;
-		interchange* temp_interchange = temp->data;
-		printf("> Linked-List: %p\n", temp);
-		printf("> Interchange: %p\t\t%p\t%p\n", temp_interchange, temp_interchange->question, temp_interchange->answer); // For debug
-		free(temp_interchange->question);
-		free(temp_interchange->answer);
-		free(temp_interchange);
+		interchange* interchange = temp->data;
+
+		printf("> Linked-List: %p\n> Interchange: %p\t\t%p\t%p\n", temp, interchange, interchange->question, interchange->answer); // For debug
+
+		free(interchange->question);
+		free(interchange->answer);
+		free(interchange);
 		free(temp);
 	}
 }

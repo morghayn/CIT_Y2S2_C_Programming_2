@@ -13,6 +13,7 @@ typedef struct node
 
 node* create_node(void* data);
 node* insert_front(node* head, void* data);
+node* get_node(node* head, int position);
 
 int length(node* head);
 

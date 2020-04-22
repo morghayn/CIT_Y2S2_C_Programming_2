@@ -16,6 +16,23 @@ node* insert_front(node* head, void* data)
 	return temp;
 }
 
+node* get_node(node* head, int position)
+{
+	while (position != 0 && head != NULL)
+	{
+		position--;
+		head = head->next;
+	}
+
+	return head;
+}
+
+/*
+
+TODO maybe add a delete node at n
+
+*/
+
 int length(node* head)
 {
 	int length = 0;

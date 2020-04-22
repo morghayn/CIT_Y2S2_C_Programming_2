@@ -16,8 +16,7 @@ typedef struct interchange
 typedef enum
 {
 	F, T
-}
-boolean;
+} boolean;
 
 interchange* create_interchange(char* question, char* answer);
 boolean split_question(char line[], char* array[]);
