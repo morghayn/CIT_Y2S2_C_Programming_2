@@ -8,7 +8,7 @@ int main(void)
 
 	//while (1 == 1)
 	//{
-		printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option: ");
+		printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option:\n");
 
 		//char* buffer;
 		//buffer = _getcwd(NULL, 0); // get the current directory
@@ -26,8 +26,11 @@ int main(void)
 		
 		//strcat(buffertwo, buffer);
 		//read_file("test");
-		str_split();
 
+		char question[] = "What's the capital of Ireland? Dublin";
+		char* return_string[2];
+		split_question(question, return_string);
+		printf("%s?\n%s", return_string[0], return_string[1]);
 
 		//printf(buffer);
 		//printf("> Hello and welcome to the Quiz game\n");
@@ -38,6 +41,17 @@ int main(void)
 	//}
 
 	return 0;
+}
+
+void split_question(char line[], char* array[])
+{
+	char* token = strtok(line, "?");
+	
+	for (int i = 0; token != NULL && i < 2; i++)
+	{
+		array[i] = token;
+		token = strtok(NULL, " ");
+	}
 }
 
 void random()
@@ -69,19 +83,6 @@ void read_file(const char* filepath)
 	}
 
 	free(line);    // dont forget to free heap memory
-}
-
-// Got from https://stackoverflow.com/questions/9210528/split-string-with-delimiters-in-c will learn code and work out a problem to fit my thing
-void str_split()
-{
-		char st[] = "Hello world? No";
-		char* ch;
-		ch = strtok(st, "?");
-		while (ch != NULL) {
-			printf("%s\n", ch);
-			ch = strtok(NULL, " ,"); // what does strtok do
-		}
-		//getch();
 }
 
 void print_question_quantity()

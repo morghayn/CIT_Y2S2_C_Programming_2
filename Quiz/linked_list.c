@@ -31,6 +31,18 @@ void print_nodes(struct node* head)
 	}
 }
 
+int length(struct node* head)
+{
+	int length = 0;
+
+	while (head != NULL)
+	{
+		length++;
+	}
+
+	return length;
+}
+
 void release_nodes(struct node* head)
 {
 	struct node* temp;

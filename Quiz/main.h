@@ -13,6 +13,6 @@ void print_question_quantity();
 void generate_clue();
 void print_score();
 void store_results();
-void str_split();
+void split_question(char line[], char* array[]);
 
 #endif

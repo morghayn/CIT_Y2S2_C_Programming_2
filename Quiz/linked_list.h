@@ -14,6 +14,8 @@ struct node
 struct node* insert_front(struct node* head, char* str);
 struct node* create_node(char* str);
 
+int length(struct node* head);
+
 void print_nodes(struct node* head);
 void release_nodes(struct node* head);
 
