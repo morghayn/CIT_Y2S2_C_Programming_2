@@ -8,6 +8,7 @@ int main(void)
 
 	//while (1 == 1)
 	//{
+	test();
 		printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option:\n");
 
 		//char* buffer;
@@ -25,12 +26,8 @@ int main(void)
 
 		
 		//strcat(buffertwo, buffer);
-		//read_file("test");
+		read_file("test");
 
-		char question[] = "What's the capital of Ireland? Dublin";
-		char* return_string[2];
-		split_question(question, return_string);
-		printf("%s?\n%s", return_string[0], return_string[1]);
 
 		//printf(buffer);
 		//printf("> Hello and welcome to the Quiz game\n");
@@ -43,15 +40,21 @@ int main(void)
 	return 0;
 }
 
-void split_question(char line[], char* array[])
+void test()
 {
-	char* token = strtok(line, "?");
-	
-	for (int i = 0; token != NULL && i < 2; i++)
-	{
-		array[i] = token;
-		token = strtok(NULL, " ");
-	}
+	/*
+	node* head = NULL;
+	head = insert_front(head, NULL);
+	head = insert_front(head, NULL);
+	head = insert_front(head, NULL);
+	head = insert_front(head, NULL);
+	*/
+	char question[] = "Hello World?";
+	char answer[] = "No thanks";
+	create_interchange(question, answer);
+
+
+	//release_nodes(head);
 }
 
 void random()
@@ -59,30 +62,65 @@ void random()
 	 ///The questions are asked in random order.
 }
 
-// initiation
+// Initiation
 void read_file(const char* filepath)
 {
-	// open and get the file handle
+	// Open and get the file handle
 	FILE* file;
 	fopen_s(&file, filepath, "r");
 
-	// check whether file exists
+	// Return if file does not exists
 	if (file == NULL)
 	{
 		printf("\n> File does not exist @ %s.\n> Returning to the main menu.", filepath);
+		fclose(file);
 		return;
 	}
 
-	// read lines consecutively
+	// Read lines consecutively
 	const size_t line_size = 300;
 	char* line = malloc(line_size);
 
 	while (fgets(line, line_size, file) != NULL)
 	{
-		printf(line);
+		char* q_and_a[2];	// Char pointer array for both the question and answer
+		boolean is_valid;	// Prevents an access violation
+		
+		is_valid = split_question(line, q_and_a);
+		if (is_valid == 1)
+		{
+			// TODO push onto Linked List here
+			// TODO push onto Linked List here
+			// TODO push onto Linked List here
+			// TODO push onto Linked List here
+			// TODO push onto Linked List here
+
+			char* question = q_and_a[0];
+			char* answer = q_and_a[1];
+
+			printf("%s?\n%s", question, answer);
+		}
 	}
 
-	free(line);    // dont forget to free heap memory
+	// Free heap memory
+	free(line);
+	fclose(file);
+}
+
+boolean split_question(char line[], char* array[])
+{
+	char* token = strtok(line, "?");
+	boolean is_valid = 0;
+
+	for (int i = 0; token != NULL && i < 2; i++)
+	{
+		is_valid = i == 1 ? 1 : is_valid;
+
+		array[i] = token;
+		token = strtok(NULL, " ");
+	}
+
+	return is_valid;
 }
 
 void print_question_quantity()

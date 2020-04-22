@@ -1,57 +1,60 @@
 #include "linked_list.h"
 
-struct node* create_node(char* string)
+node* create_node(struct data* data)
 {
 	struct node* temp;
 
-	temp = (struct node*) malloc(sizeof(struct node));
-	temp->string = string;
-	temp->head = NULL;
+	temp = (node*) malloc(sizeof(node));
+	temp->next = NULL;
+	temp->data = data;
 
 	return temp;
 }
 
-struct node* insert_front(struct node* head, char* string)
+node* insert_front(node* head, struct data* data)
 {
-	char* new_str = (char*)malloc((strlen(string) + 1) * sizeof(char));
-	strcpy(new_str, string);
-
-	struct node* temp = create_node(new_str);
-	temp->head = head;
+	struct node* temp = create_node(data);
+	temp->next = head;
 
 	return temp;
 }
 
-void print_nodes(struct node* head)
-{
-	while (head != NULL)
-	{
-		printf(head->string);
-		head = head->head;
-	}
-}
-
-int length(struct node* head)
+int length(node* head)
 {
 	int length = 0;
 
 	while (head != NULL)
 	{
 		length++;
+		head = head->next;
 	}
 
 	return length;
 }
 
-void release_nodes(struct node* head)
+// TODO is this needed?
+void release_nodes(node* head)
 {
 	struct node* temp;
+	printf("release attempt\n\n"); // TODO remove debug
 
 	while (head != NULL)
 	{
+		printf("release node\n"); // TODO remove debug
 		temp = head;
-		head = head->head;
-		free(temp->string);
+		head = head->next;
+		free(temp->data);
 		free(temp);
 	}
 }
+
+/*
+void print_nodes(struct node* head)
+{
+	while (head != NULL)
+	{
+		printf(head->question);
+		head = head->next;
+	}
+}
+*/

@@ -2,21 +2,22 @@
 #define LINKED_LIST_H
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <stdio.h>
-#include <string.h>
+#include <stdio.h> // TODO remove after debug
+#include <stdlib.h>
 
-struct node
+typedef struct node
 {
-	char* string;
-	struct node* head;
-};
+	struct data* data;
+	struct node* next;
+} node;
 
-struct node* insert_front(struct node* head, char* str);
-struct node* create_node(char* str);
+node* create_node(struct data* data);
+node* insert_front(node* head, struct data* data);
+//node* get_next();
 
-int length(struct node* head);
+int length(node* head);
 
-void print_nodes(struct node* head);
-void release_nodes(struct node* head);
+//void print_nodes(struct node* head);
+void release_nodes(node* head);
 
 #endif
