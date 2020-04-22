@@ -7,17 +7,16 @@
 
 typedef struct node
 {
-	struct data* data;
+	void* data;
 	struct node* next;
 } node;
 
-node* create_node(struct data* data);
-node* insert_front(node* head, struct data* data);
-//node* get_next();
+node* create_node(void* data);
+node* insert_front(node* head, void* data);
 
 int length(node* head);
 
-//void print_nodes(struct node* head);
-void release_nodes(node* head);
+void print_linked_list(node* head);
+void release_linked_list(node* head);
 
 #endif

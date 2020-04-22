@@ -5,7 +5,7 @@
 #include <stdlib.h> // for debug
 #include <stdio.h>
 #include <string.h>
-//#include "linked_list.h"
+#include "linked_list.h"
 
 typedef struct interchange
 {
@@ -13,13 +13,20 @@ typedef struct interchange
 	char* answer;
 } interchange;
 
-void create_interchange();
+typedef enum
+{
+	F, T
+}
+boolean;
 
-/*
-int length(struct node* head);
+interchange* create_interchange(char* question, char* answer);
+boolean split_question(char line[], char* array[]);
+node* build_quiz(const char* filepath);
 
-//void print_nodes(struct node* head);
-void release_nodes(struct node* head);
-*/
+char* generate_clue(int difficulty);
+void print_score();
+
+void release_quiz(node* head);
+void debug_print_quiz(node* head);
 
 #endif

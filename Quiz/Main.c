@@ -2,184 +2,31 @@
 
 int main(void)
 {	
-	// -> Start
-	// Select quiz
-	// Select  
+	printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option:\n");
+	//char* buffer;
+	//buffer = _getcwd(NULL, 0); // get the current directory
+	//buffer = (char*)realloc(buffer, 25);
+	//strcat(buffer, "test");
+	//printf(buffer);
 
-	//while (1 == 1)
-	//{
-	test();
-		printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option:\n");
-
-		//char* buffer;
-		//buffer = _getcwd(NULL, 0); // get the current directory
-		//buffer = (char*)realloc(buffer, 25);
-		//strcat(buffer, "test");
-		//printf(buffer);
-
-
-		//char* clue = malloc(3 * sizeof(char));
-		//clue[2] = '\0';
-		//printf("\nsize of clue:%d\n", strlen(clue));
-
-
-
+	//char* clue = malloc(3 * sizeof(char));
+	//clue[2] = '\0';
+	//printf("\nsize of clue:%d\n", strlen(clue));
 		
-		//strcat(buffertwo, buffer);
-		read_file("test");
-
-
-		//printf(buffer);
-		//printf("> Hello and welcome to the Quiz game\n");
-		//printf("> Please enter a number between 1 and 6: \n");
-		//printf("> Start?\n");
-		printf("\n");
-		system("pause");
-	//}
-
-	return 0;
-}
-
-void test()
-{
-	/*
 	node* head = NULL;
-	head = insert_front(head, NULL);
-	head = insert_front(head, NULL);
-	head = insert_front(head, NULL);
-	head = insert_front(head, NULL);
-	*/
-	char question[] = "Hello World?";
-	char answer[] = "No thanks";
-	create_interchange(question, answer);
+	head = build_quiz("test");
 
-
-	//release_nodes(head);
+	debug_print_quiz(head);
+	printf("\n\n\n");
+	release_quiz(head);
+	printf("\n");
+	system("pause");
+	return 0;
 }
 
 void random()
 {
 	 ///The questions are asked in random order.
-}
-
-// Initiation
-void read_file(const char* filepath)
-{
-	// Open and get the file handle
-	FILE* file;
-	fopen_s(&file, filepath, "r");
-
-	// Return if file does not exists
-	if (file == NULL)
-	{
-		printf("\n> File does not exist @ %s.\n> Returning to the main menu.", filepath);
-		fclose(file);
-		return;
-	}
-
-	// Read lines consecutively
-	const size_t line_size = 300;
-	char* line = malloc(line_size);
-
-	while (fgets(line, line_size, file) != NULL)
-	{
-		char* q_and_a[2];	// Char pointer array for both the question and answer
-		boolean is_valid;	// Prevents an access violation
-		
-		is_valid = split_question(line, q_and_a);
-		if (is_valid == 1)
-		{
-			// TODO push onto Linked List here
-			// TODO push onto Linked List here
-			// TODO push onto Linked List here
-			// TODO push onto Linked List here
-			// TODO push onto Linked List here
-
-			char* question = q_and_a[0];
-			char* answer = q_and_a[1];
-
-			printf("%s?\n%s", question, answer);
-		}
-	}
-
-	// Free heap memory
-	free(line);
-	fclose(file);
-}
-
-boolean split_question(char line[], char* array[])
-{
-	char* token = strtok(line, "?");
-	boolean is_valid = 0;
-
-	for (int i = 0; token != NULL && i < 2; i++)
-	{
-		is_valid = i == 1 ? 1 : is_valid;
-
-		array[i] = token;
-		token = strtok(NULL, " ");
-	}
-
-	return is_valid;
-}
-
-void print_question_quantity()
-{
-	// print out number of questions from file
-}
-
-// start asking questions
-void generate_clue()
-{
-	int difficulty = 0; // (temporary will be in header file)
-
-	switch (difficulty)
-	{
-		case 1:
-				/*
-				1. No clue is given and only a ‘?’ is shown. 
-				Example: What is the capital of France? ?
-				*/
-				break;
-		case 2:
-				/*
-				2. A set of blank dashes seprated by spaces is displayed, one for every letter in the answer. 
-				Example: What is the capital of France? - - - -
-				*/
-				break;
-		case 3:
-				/*
-				The ﬁrst and the last letters are shown. 
-				Example: What is the capital of France? P - - - S
-				*/
-				break;
-		case 4:
-				/*
-				Two random letters from the answer are shown in their correct position. 
-				Example: What is the capital of France? P - R -
-				*/
-				break;
-		case 5:
-				/*
-				All letters are shown but in random order.
-				Example: What is the capital of France? R S I P A
-				*/
-				break;
-		case 6:
-				/*
-				The type of clue is randomly selected from the 5 types listed above.
-				*/
-				break;
-		default:
-			printf("Something appears to have gone wrong. o,,o");
-				break;
-	}
-	// for each question, display a clue (if available, see below); the user has one attempt only, and the program is case insensitive (accepts both lower and upper case answers) 
-}
-
-void print_score()
-{
-	// after each question display the number of questions asked and the number of correctly answered questions so far. Example: Score: 5/7 
 }
 
 // at the end store the results in a file quiz_history.txt by appending to the file one line containing:
@@ -189,4 +36,39 @@ void store_results()
 	// number of questions answered correctly
 	// total number of questions
 	// difficulty level
+}
+
+void test()
+{
+	/*
+	node* head = NULL;
+	printf("> Will have to free the following...\n");
+
+	char question[] = "Hello World?";
+	char answer[] = "No thanks";
+	interchange* test = create_interchange(question, answer);
+	head = insert_front(head, test);
+
+	char question2[] = "Hello World?";
+	char answer2[] = "No thanks";
+	interchange* test2 = create_interchange(question2, answer2);
+	head = insert_front(head, test2);
+
+	char question3[] = "Hello World?";
+	char answer3[] = "No thanks";
+	interchange* test3 = create_interchange(question3, answer3);
+	head = insert_front(head, test3);
+
+	char question4[] = "Hello World?";
+	char answer4[] = "No thanks";
+	interchange* test4 = create_interchange(question4, answer4);
+	head = insert_front(head, test4);
+
+	printf("List length should be four: %d\n", length(head));
+	print_linked_list(head);
+
+
+	release_quiz(head);
+	//release_nodes(head);
+	*/
 }

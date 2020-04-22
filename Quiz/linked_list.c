@@ -1,21 +1,18 @@
 #include "linked_list.h"
 
-node* create_node(struct data* data)
+node* create_node(void* data)
 {
-	struct node* temp;
-
-	temp = (node*) malloc(sizeof(node));
+	struct node* temp = (node*) malloc(sizeof(node));
+	printf("> Linked-List: %p\n", temp); // For debug
 	temp->next = NULL;
 	temp->data = data;
-
 	return temp;
 }
 
-node* insert_front(node* head, struct data* data)
+node* insert_front(node* head, void* data)
 {
 	struct node* temp = create_node(data);
 	temp->next = head;
-
 	return temp;
 }
 
@@ -32,8 +29,18 @@ int length(node* head)
 	return length;
 }
 
-// TODO is this needed?
-void release_nodes(node* head)
+void print_linked_list(node* head)
+{
+	while (head != NULL)
+	{
+		printf("%p->", head);
+		head = head->next;
+	}
+
+	printf("NULL");
+}
+
+void release_linked_list(node* head)
 {
 	struct node* temp;
 	printf("release attempt\n\n"); // TODO remove debug
@@ -47,14 +54,3 @@ void release_nodes(node* head)
 		free(temp);
 	}
 }
-
-/*
-void print_nodes(struct node* head)
-{
-	while (head != NULL)
-	{
-		printf(head->question);
-		head = head->next;
-	}
-}
-*/
