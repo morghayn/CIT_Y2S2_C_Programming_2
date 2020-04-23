@@ -8,4 +8,6 @@
 void swap(int* a, int* b);
 void shuffle_array(int arr[], int n);
 
+int random(int lower, int upper);
+
 #endif

@@ -1,28 +1,23 @@
+#include "io.h"
 
-/* ~ C-ify this function
-private static int inputNumber(int smallerThan, int largerThan, String message)
+int input_number(int lower, int upper, char *message)
 {
-    int num;
+    int temp;
+	char c = '0';
 
     do
     {
-        System.out.print(message);
+		printf(message);
+		if (scanf_s("%d[^\n]", &temp) == 0) 
+		{
+			while ((c = getchar()) != '\n' && c != EOF);
+		}
+    } while (temp < lower || temp > upper);
 
-        while (!sc.hasNextInt())
-        {
-            System.out.print(message);
-            sc.next();
-        }
-
-        num = sc.nextInt();
-    } while (num < smallerThan || num > largerThan);
-
-    sc.nextLine();
-
-    return num;
+    return temp;
 }
-*/
 
+/* ~ C-ify this function
 int get_number()
 {
 	/* WIP
@@ -46,7 +41,6 @@ int get_number()
 	{
 		word[i] = tolower(word[i]);
 	}
-	*/
 }
 
 char* get_word()
@@ -72,5 +66,5 @@ char* get_word()
 	{
 		word[i] = tolower(word[i]);
 	}
-	*/
 }
+	*/

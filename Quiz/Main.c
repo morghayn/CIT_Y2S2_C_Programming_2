@@ -2,6 +2,7 @@
 
 int main(void)
 {	
+	int difficulty;
 	/*
 	at start 
 		– load the questions and answers from the ﬁle 
@@ -15,6 +16,10 @@ int main(void)
 		– total number of questions 
 		– diﬃculty level
 	*/
+
+	difficulty = input_number(1, 6, "> Choose a difficulty [1-6]: ");
+	printf("> Difficulty '%d' chosen\n", difficulty);
+
 
 	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 	int n = sizeof(arr) / sizeof(arr[0]);
@@ -37,16 +42,6 @@ int main(void)
 	system("pause");
 	*/
 	return 0;
-}
-
-void random(int lower, int upper, int count)
-{
-	for (int i = 0; i < count; i++) 
-	{
-		srand(rand());
-		int num = (rand() % (upper - lower + 1)) + lower;
-		printf("%d, ", num);
-	}
 }
 
 // at the end store the results in a file quiz_history.txt by appending to the file one line containing:
