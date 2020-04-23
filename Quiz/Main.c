@@ -51,10 +51,11 @@ int main(void)
 	queue = (int*)malloc(question_quantity * sizeof(int*));
 	for (int i = 0; i < question_quantity; i++)
 	{
-		queue[i] = i + 1;
+		queue[i] = i;
 	}
 	shuffle_array(queue, question_quantity);
 	print_array(queue, question_quantity);
+	ask_questions(queue, question_quantity, head);
 
 	/*		
 	node* head = NULL;
@@ -77,6 +78,21 @@ void print_array(int arr[], int n)
 	for (int i = 0; i < n; i++)
 	{
 		printf("%d\t%d\n", n, arr[i]);
+	}
+}
+
+void ask_questions(int arr[], int n, node* head)
+{
+	node* temp;
+	interchange* interchange;
+	char* current_question;
+
+	for (int i = 0; i < n; i++)
+	{
+		temp = get_node(head, arr[i]);
+		interchange = temp->data;
+		current_question = interchange->question;
+		printf("%s?\n", current_question);
 	}
 }
 

@@ -55,30 +55,3 @@ char* input_word(char* message)
 
 	return string;
 }
-
-/*
-char* get_word()
-{
-	/* WIP
-	printf("> Input selection:\t\t"); // TODO replace with char* message as parameter
-	if (fgets(word, NUMBER + 1, stdin))
-	{
-		char* p;
-
-		if (p = strchr(word, '\n'))
-		{
-			*p = 0;
-		}
-		else
-		{
-			scanf("%*[^\n]");
-			scanf("%*c");
-		}
-	}
-
-	for (int i = 0; word[i]; i++)
-	{
-		word[i] = tolower(word[i]);
-	}
-}
-	*/

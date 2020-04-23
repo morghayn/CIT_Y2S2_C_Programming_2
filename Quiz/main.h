@@ -9,5 +9,6 @@
 #include <string.h>
 
 void print_array(int arr[], int n);
+void ask_questions(int arr[], int n, node* head);
 
 #endif
