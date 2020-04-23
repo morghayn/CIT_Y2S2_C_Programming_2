@@ -5,7 +5,8 @@ interchange* create_interchange(char* question, char* answer)
 	interchange* temp = (interchange*)malloc(sizeof(interchange));
 	temp->question = _strdup(question);
 	temp->answer = _strdup(answer);
-	printf("> Interchange: %p\t\t%p\t%p\n", temp, temp->question, temp->answer); // For debug
+	temp->correct = F;
+	// printf("> Interchange: %p\t\t%p\t%p\n", temp, temp->question, temp->answer); /* uncomment for debub output */
 	return temp;
 }
 
@@ -35,8 +36,7 @@ node* build_quiz(const char* filepath)
 
 	if (file == NULL)
 	{
-		printf("\n> File does not exist @ %s.\n> Returning to the main menu.", filepath);
-		// fclose(file); <-- this little guy will throw a kernel error if uncommented
+		printf("\n> File does not exist @ %s. Returning to the main menu.\n\n", filepath);
 		return head;
 	}
 
@@ -136,9 +136,58 @@ char* generate_clue(int difficulty, char* current_answer)
 	return clue;
 }
 
-void print_score()
+boolean check_guess(interchange* current_interchange, char* guess)
 {
-	// after each question display the number of questions asked and the number of correctly answered questions so far. Example: Score: 5/7 
+	int i;
+	int x = 0;
+	boolean is_correct = F;
+	char* lowercase_guess = _strdup(guess);
+	char* lowercase_answer = _strdup(current_interchange->answer);
+
+	if (strlen(lowercase_answer) == strlen(lowercase_answer))
+	{
+		// -> swap out to utility.c "make_lowercase()" ?? maybe
+		for (i = 0; lowercase_guess[i] != '\0'; i++)
+		{
+			lowercase_guess[i] = tolower(lowercase_guess[i]);
+		}
+		for (i = 0; lowercase_answer[i] != '\0'; i++)
+		{
+			lowercase_answer[i] = tolower(lowercase_answer[i]);
+		}
+		for (i = 0; lowercase_answer[i] != '\0'; i++)
+		{
+			if (lowercase_answer[i] != lowercase_guess[i])
+			{
+				x++;
+			}
+		}
+
+		is_correct = x == 0 ? T : F;
+	}
+	else
+	{
+		is_correct = F;
+	}
+
+	current_interchange->correct = is_correct;
+	free(lowercase_answer);
+	free(lowercase_guess);
+
+	return is_correct;
+}
+
+void print_round_summary(node* head)
+{
+	struct node* temp;
+
+	while (head != NULL)
+	{
+		temp = head;
+		head = head->next;
+		interchange* interchange = temp->data;
+		printf("\n> Question:\t%s? You were %s.\n> Answer:\t%s\n", interchange->question, (interchange->correct == F ? "Incorrect" : "Correct"), interchange->answer);
+	}
 }
 
 void store_results()
@@ -152,31 +201,16 @@ void store_results()
 void release_quiz(node* head)
 {
 	struct node* temp;
-	printf("\n\n\n> Freeing what needed to be freed....\n"); // For debug
+	// printf("\n\n\n> Freeing what needed to be freed....\n"); /* uncomment for debub output */
 	while (head != NULL)
 	{
 		temp = head;
 		head = head->next;
 		interchange* interchange = temp->data;
-
-		printf("> Linked-List: %p\n> Interchange: %p\t\t%p\t%p\n", temp, interchange, interchange->question, interchange->answer); // For debug
-
+		// printf("> Linked-List: %p\n> Interchange: %p\t\t%p\t%p\n", temp, interchange, interchange->question, interchange->answer); /* uncomment for debub output */
 		free(interchange->question);
 		free(interchange->answer);
 		free(interchange);
 		free(temp);
-	}
-}
-
-void debug_print_quiz(node* head)
-{
-	struct node* temp;
-
-	while (head != NULL)
-	{
-		temp = head;
-		head = head->next;
-		interchange* interchange = temp->data;
-		printf("Question:\t%s\nAnswer:\t\t%s\n", interchange->question, interchange->answer);
 	}
 }

@@ -3,7 +3,7 @@
 node* create_node(void* data)
 {
 	struct node* temp = (node*) malloc(sizeof(node));
-	printf("> Linked-List: %p\n", temp); // For debug
+	// printf("> Linked-List: %p\n", temp); /* uncomment for debub output */
 	temp->next = NULL;
 	temp->data = data;
 	return temp;

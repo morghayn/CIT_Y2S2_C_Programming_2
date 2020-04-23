@@ -1,8 +1,52 @@
 ﻿#include "main.h"
 
+/*
+implement this at some stage
+char* buffer;
+buffer = _getcwd(NULL, 0); // get the current directory
+buffer = (char*)realloc(buffer, 25);
+strcat(buffer, "test");
+*/
+
 int main(void)
 {
+	// Menu Selection
 	int menu_selection;
+	boolean quit = F;
+	char border_top[] = "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+	char border_bottom[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
+
+	while (quit == F)
+	{
+		printf("> 1. Start\n> 2. Scoreboard\n> 3. Quit\n");
+		menu_selection = input_number(1, 3, "> Make menu selection [1-3]: ");
+
+		switch (menu_selection)
+		{
+		case 1:
+			printf(border_top);
+			quiz();
+			printf(border_bottom);
+			break;
+		case 2:
+			print_scoreboard();
+			break;
+		case 3:
+			quit = T;
+			break;
+		default:
+			printf("Something appears to have gone gravely wrong. o,,o");
+			break;
+		}
+	}
+
+	system("pause");
+
+	return 0;
+}
+
+void quiz()
+{
 	char* file_path;
 	node* head = NULL;
 	int question_quantity;
@@ -10,31 +54,17 @@ int main(void)
 	int difficulty;
 	interchange* current_interchange = NULL;
 	char* current_clue;
-
-	/*
-	at start
-		– load the questions and answers from the ﬁle
-		– print out the number of questions in the quiz
-	start asking questions
-		– for each question, display a clue (if available, see below); the user has one attempt only, and the program is case insensitive (accepts both lower and upper case answers)
-		– after each question display the number of questions asked and the number of correctly answered questions so far. Example: Score: 5/7
-	at the end store the results in a ﬁle quiz_history.txt by appending to the ﬁle one line containing:
-		– name of the quiz ﬁle
-		– number of questions answered correctly
-		– total number of questions
-		– diﬃculty level
-	*/
-
-	// Menu Selection
-	printf("> 1. Start\n> 2. Scoreboard\n> 3. Quit\n");
-	menu_selection = input_number(1, 3, "> Make menu selection [1-3]: ");
+	int incorrect_answers = 0;
 
 	// Getting file path and then freeing file path once quiz has been built
 	file_path = input_word("> Input file location:\n> \\");
 	head = build_quiz(file_path);
 	free(file_path);
 
-	// Return if file path not found here
+	if (head == NULL)
+	{
+		return;
+	}
 
 	// Counting quantity of questions
 	question_quantity = length(head);
@@ -46,28 +76,30 @@ int main(void)
 
 	// Setting difficulty
 	difficulty = input_number(1, 6, "> Choose a difficulty [1-6]: ");
-	printf("> Difficulty '%d' chosen\n", difficulty);
+	printf("> Difficulty '%d' chosen\n\n\n", difficulty);
 
+	// Each interchange is an iteration of this loop
 	for (int i = 0; i < question_quantity; i++)
 	{
 		current_interchange = get_interchange(question_queue[i], head);
 		current_clue = generate_clue(difficulty, current_interchange->answer);
-		printf("%s? %s\n", current_interchange->question, current_clue);
+
+		printf("> %s? %s\n", current_interchange->question, current_clue);
+		incorrect_answers += (check_guess(current_interchange, input_word("\n> Input answer: ")) == 1 ? 0 : 1);
+		printf("> Questions asked: %d\n> Incorrect answers: %d\n\n", i + 1, incorrect_answers);
+
 		free(current_clue);
 	}
 
+	if (input_number(0, 1, "> Would you like to see a round summary [1 = Yeah; 0 = No]? ") == 1)
+	{
+		print_round_summary(head);
+	}
+
 	release_quiz(head);
-	/*
-	debug_print_quiz(head);
-	release_quiz(head);
-	system("pause");
-	*/
-	return 0;
 }
 
-/*
-char* buffer;
-buffer = _getcwd(NULL, 0); // get the current directory
-buffer = (char*)realloc(buffer, 25);
-strcat(buffer, "test");
-*/
+void print_scoreboard()
+{
+	printf("Scoreboard");
+}
