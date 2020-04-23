@@ -36,8 +36,8 @@ node* build_quiz(const char* filepath)
 	if (file == NULL)
 	{
 		printf("\n> File does not exist @ %s.\n> Returning to the main menu.", filepath);
-		fclose(file);
-		return NULL;
+		// fclose(file); <-- this little guy will throw a kernel error if uncommented
+		return head;
 	}
 
 	const size_t line_size = 300;
@@ -118,6 +118,14 @@ char* generate_clue(int difficulty)
 void print_score()
 {
 	// after each question display the number of questions asked and the number of correctly answered questions so far. Example: Score: 5/7 
+}
+
+void store_results()
+{
+	// name of the quiz file
+	// number of questions answered correctly
+	// total number of questions
+	// difficulty level
 }
 
 void release_quiz(node* head)

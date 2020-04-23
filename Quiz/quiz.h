@@ -25,6 +25,7 @@ node* build_quiz(const char* filepath);
 char* generate_clue(int difficulty);
 void print_score();
 
+void store_results();
 void release_quiz(node* head);
 void debug_print_quiz(node* head);
 

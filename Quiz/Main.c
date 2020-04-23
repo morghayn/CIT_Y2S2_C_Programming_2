@@ -2,7 +2,12 @@
 
 int main(void)
 {	
+	int menu_selection;
+	char* file_path;
+	node* head = NULL;
+	int question_quantity;
 	int difficulty;
+
 	/*
 	at start 
 		– load the questions and answers from the ﬁle 
@@ -17,18 +22,41 @@ int main(void)
 		– diﬃculty level
 	*/
 
+	// Menu Selection
+	printf("> 1. Start\n> 2. Scoreboard\n> 3. Quit\n");
+	menu_selection = input_number(1, 3, "> Make menu selection [1-3]: ");
+	
+	// WIP get file path and concate to message below
+	//char* buffer(getcwd(NULL, 0));
+	//char* hello = "yo dawg";
+	//strcat(hello, buffer);
+	//printf("%s\n\n", buffer);
+
+	file_path = input_word("> Input file location:\n>\\");
+	printf("\nfile_path : %p\n", file_path);
+	head = build_quiz(file_path);
+	free(file_path);
+
+	// Return if file path not found here
+
+	// Counting quantity of questions
+	question_quantity = length(head);
+	printf("> There are exactly '%d' questions in this quiz.\n", question_quantity);
+
+	// Setting difficulty
 	difficulty = input_number(1, 6, "> Choose a difficulty [1-6]: ");
 	printf("> Difficulty '%d' chosen\n", difficulty);
 
+	int *queue;
+	queue = (int*)malloc(question_quantity * sizeof(int*));
+	for (int i = 0; i < question_quantity; i++)
+	{
+		queue[i] = i + 1;
+	}
+	shuffle_array(queue, question_quantity);
+	print_array(queue, question_quantity);
 
-	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-	int n = sizeof(arr) / sizeof(arr[0]);
-	printf("size of n:%d\n", n);
-	shuffle_array(arr, n);
-
-	/*
-	printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option:\n");
-		
+	/*		
 	node* head = NULL;
 	head = build_quiz("test");
 	//interchange* interchange = head->data;
@@ -44,13 +72,12 @@ int main(void)
 	return 0;
 }
 
-// at the end store the results in a file quiz_history.txt by appending to the file one line containing:
-void store_results()
+void print_array(int arr[], int n)
 {
-	// name of the quiz file
-	// number of questions answered correctly
-	// total number of questions
-	// difficulty level
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d\t%d\n", n, arr[i]);
+	}
 }
 
 /*

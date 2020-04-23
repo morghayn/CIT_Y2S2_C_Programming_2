@@ -8,6 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void store_results();
+void print_array(int arr[], int n);
 
 #endif
