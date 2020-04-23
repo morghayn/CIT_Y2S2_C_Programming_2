@@ -4,11 +4,7 @@
 
 #include "io.h"
 #include "quiz.h"
-#include "utility.h"
 #include <stdio.h>
 #include <string.h>
-
-void print_array(int arr[], int n);
-void ask_questions(int arr[], int n, node* head);
 
 #endif

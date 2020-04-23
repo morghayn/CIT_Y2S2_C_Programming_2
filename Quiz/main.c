@@ -6,7 +6,10 @@ int main(void)
 	char* file_path;
 	node* head = NULL;
 	int question_quantity;
+	int* question_queue;
 	int difficulty;
+	interchange* current_interchange = NULL;
+	char* current_clue;
 
 	/*
 	at start
@@ -26,14 +29,8 @@ int main(void)
 	printf("> 1. Start\n> 2. Scoreboard\n> 3. Quit\n");
 	menu_selection = input_number(1, 3, "> Make menu selection [1-3]: ");
 
-	// WIP get file path and concate to message below
-	//char* buffer(getcwd(NULL, 0));
-	//char* hello = "yo dawg";
-	//strcat(hello, buffer);
-	//printf("%s\n\n", buffer);
-
-	file_path = input_word("> Input file location:\n>\\");
-	printf("\nfile_path : %p\n", file_path);
+	// Getting file path and then freeing file path once quiz has been built
+	file_path = input_word("> Input file location:\n> \\");
 	head = build_quiz(file_path);
 	free(file_path);
 
@@ -43,55 +40,29 @@ int main(void)
 	question_quantity = length(head);
 	printf("> There are exactly '%d' questions in this quiz.\n", question_quantity);
 
+	// Initizializing and shuffling question queue
+	question_queue = (int*)malloc(question_quantity * sizeof(int*)); // Must free when queue is finished
+	shuffle_question_queue(question_queue, question_quantity);
+
 	// Setting difficulty
 	difficulty = input_number(1, 6, "> Choose a difficulty [1-6]: ");
 	printf("> Difficulty '%d' chosen\n", difficulty);
 
-	int* queue;
-	queue = (int*)malloc(question_quantity * sizeof(int*));
 	for (int i = 0; i < question_quantity; i++)
 	{
-		queue[i] = i;
+		current_interchange = get_interchange(question_queue[i], head);
+		current_clue = generate_clue(difficulty, current_interchange->answer);
+		printf("%s? %s\n", current_interchange->question, current_clue);
+		free(current_clue);
 	}
-	shuffle_array(queue, question_quantity);
-	print_array(queue, question_quantity);
-	ask_questions(queue, question_quantity, head);
 
+	release_quiz(head);
 	/*
-	node* head = NULL;
-	head = build_quiz("test");
-	//interchange* interchange = head->data;
-	random(0, 5, 100);
-
-
 	debug_print_quiz(head);
 	release_quiz(head);
 	system("pause");
 	*/
 	return 0;
-}
-
-void print_array(int arr[], int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		printf("%d\t%d\n", n, arr[i]);
-	}
-}
-
-void ask_questions(int arr[], int n, node* head)
-{
-	node* temp;
-	interchange* interchange;
-	char* current_question;
-
-	for (int i = 0; i < n; i++)
-	{
-		temp = get_node(head, arr[i]);
-		interchange = temp->data;
-		current_question = interchange->question;
-		printf("%s?\n", current_question);
-	}
 }
 
 /*

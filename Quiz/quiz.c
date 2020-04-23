@@ -19,7 +19,7 @@ boolean split_question(char line[], char* array[])
 		is_valid = i == 1 ? 1 : is_valid;
 
 		array[i] = token;
-		token = strtok(NULL, " ");
+		token = strtok(NULL, " \n");
 	}
 
 	return is_valid;
@@ -63,56 +63,77 @@ node* build_quiz(const char* filepath)
 	return head;
 }
 
+void shuffle_question_queue(int* question_queue, int question_quantity)
+{
+	for (int i = 0; i < question_quantity; i++)
+	{
+		question_queue[i] = i;
+	}
+	shuffle_array(question_queue, question_quantity);
+}
+
+interchange* get_interchange(int current_question, node* head)
+{
+	node* temp;
+	temp = get_node(head, current_question);
+	return temp->data;
+}
+
 // start asking questions
-char* generate_clue(int difficulty)
+char* generate_clue(int difficulty, char* current_answer)
 {
 	char* clue;
+	int length = strlen(current_answer);
+	char temp[] = "?";
+	int i, j;
 
 	switch (difficulty)
 	{
-	case 1:
-		/*
-		1. No clue is given and only a ‘?’ is shown.
-		Example: What is the capital of France? ?
-		*/
-		clue = "?";
-		break;
-	case 2:
-		/*
-		2. A set of blank dashes seprated by spaces is displayed, one for every letter in the answer.
-		Example: What is the capital of France? - - - -
-		*/
-		break;
-	case 3:
-		/*
-		The ﬁrst and the last letters are shown.
-		Example: What is the capital of France? P - - - S
-		*/
-		break;
-	case 4:
-		/*
-		Two random letters from the answer are shown in their correct position.
-		Example: What is the capital of France? P - R -
-		*/
-		break;
-	case 5:
-		/*
-		All letters are shown but in random order.
-		Example: What is the capital of France? R S I P A
-		*/
-		break;
-	case 6:
-		/*
-		The type of clue is randomly selected from the 5 types listed above.
-		*/
-		// clue = generate_clue(random(1, 5))
-		break;
-	default:
-		printf("Something appears to have gone wrong. o,,o");
-		break;
+		case 1:
+			clue = _strdup(temp);
+			break;
+
+		case 2:
+			clue = _strdup(current_answer);
+			memset(clue, '-', length * sizeof(char));
+			break;
+
+		case 3:
+			clue = generate_clue(2, current_answer);
+			memcpy(clue, current_answer, 1);
+			memcpy(clue + (length) - 1, current_answer + (length) - 1, 1);
+			break;
+
+		case 4:
+			clue = generate_clue(2, current_answer);
+			i = random(0, length - 1);
+
+			do
+			{
+				j = random(0, length - 1);
+			} while (i == j);
+
+			memcpy(clue + i, current_answer + i, 1 * sizeof(char));
+			memcpy(clue + j, current_answer + j, 1 * sizeof(char));
+			break;
+
+		case 5:
+			clue = _strdup(current_answer);
+			shuffle_char_array(clue, length);
+			break;
+
+		case 6:
+			clue = generate_clue(random(1, 5), current_answer);
+			break;
+
+		default:
+			printf("Something appears to have gone wrong. o,,o");
+			clue = malloc(sizeof(char));
+			clue = "\0";
+			break;
 	}
-	// for each question, display a clue (if available, see below); the user has one attempt only, and the program is case insensitive (accepts both lower and upper case answers) 
-	return "";
+
+	return clue;
 }
 
 void print_score()

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "linked_list.h"
+#include "utility.h"
 
 typedef struct interchange
 {
@@ -22,7 +23,10 @@ interchange* create_interchange(char* question, char* answer);
 boolean split_question(char line[], char* array[]);
 node* build_quiz(const char* filepath);
 
-char* generate_clue(int difficulty);
+interchange* get_interchange(int current_question, node* head);
+void shuffle_question_queue(int* question_queue, int question_quantity);
+
+char* generate_clue(int difficulty, char* current_answer);
 void print_score();
 
 void store_results();
