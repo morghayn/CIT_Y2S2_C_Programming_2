@@ -50,8 +50,6 @@ char* input_word(char* message)
 		}
 
 	}
-	string[i] = '\0';  // Null terminate the string
-	printf("\string : %p\n", string);
-
+	string[i] = '\0';
 	return string;
 }
