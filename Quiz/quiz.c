@@ -28,7 +28,6 @@ boolean split_question(char line[], char* array[])
 
 node* build_quiz(const char* filepath)
 {
-	interchange* interchange = NULL;
 	node* head = NULL;
 	FILE* file;
 
@@ -36,30 +35,28 @@ node* build_quiz(const char* filepath)
 
 	if (file == NULL)
 	{
-		printf("\n> File does not exist @ %s. Returning to the main menu.\n\n", filepath);
-		return head;
+		printf("\n> File does not exist @ \\%s. Returning to the main menu.\n\n", filepath);
 	}
-
-	const size_t line_size = 300;
-	char* line = malloc(line_size);
-
-	while (fgets(line, line_size, file) != NULL)
+	else
 	{
-		char* q_and_a[2];	// Char pointer array for both the question and answer
-		boolean is_valid;	// Prevents an access violation
+		char* q_and_a[2];
+		const size_t line_size = 300;
+		char* line = malloc(line_size);
 
-		is_valid = split_question(line, q_and_a);
-		if (is_valid == 1)
+		while (fgets(line, line_size, file) != NULL)
 		{
-			char* question = q_and_a[0];
-			char* answer = q_and_a[1];
-			interchange = create_interchange(question, answer);
-			head = insert_front(head, interchange);
+			if (split_question(line, q_and_a) == 1)
+			{
+				head = insert_front(head, 
+					create_interchange(q_and_a[0], q_and_a[1])
+				);
+			}
 		}
+
+		free(line);
+		fclose(file);
 	}
 
-	free(line);
-	fclose(file);
 	return head;
 }
 
@@ -74,9 +71,7 @@ void shuffle_question_queue(int* question_queue, int question_quantity)
 
 interchange* get_interchange(int current_question, node* head)
 {
-	node* temp;
-	temp = get_node(head, current_question);
-	return temp->data;
+	return get_node(head, current_question)->data;
 }
 
 // start asking questions
