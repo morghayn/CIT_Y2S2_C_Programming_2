@@ -2,6 +2,26 @@
 
 int main(void)
 {	
+	/*
+	at start 
+		– load the questions and answers from the ﬁle 
+		– print out the number of questions in the quiz 
+	start asking questions 
+		– for each question, display a clue (if available, see below); the user has one attempt only, and the program is case insensitive (accepts both lower and upper case answers) 
+		– after each question display the number of questions asked and the number of correctly answered questions so far. Example: Score: 5/7
+	at the end store the results in a ﬁle quiz_history.txt by appending to the ﬁle one line containing: 
+		– name of the quiz ﬁle 
+		– number of questions answered correctly 
+		– total number of questions 
+		– diﬃculty level
+	*/
+
+	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+	int n = sizeof(arr) / sizeof(arr[0]);
+	printf("size of n:%d\n", n);
+	shuffle_array(arr, n);
+
+	/*
 	printf("> 1. Start\n> 3. Scoreboard\n> 2. Quit\n> Input option:\n");
 		
 	node* head = NULL;
@@ -15,6 +35,7 @@ int main(void)
 	release_quiz(head);
 	printf("\n");
 	system("pause");
+	*/
 	return 0;
 }
 
