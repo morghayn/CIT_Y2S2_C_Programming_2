@@ -35,6 +35,9 @@
   <ItemGroup>
     <None Include="test" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="quiz_history.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{4757C996-7813-4089-A993-3D7910AEE3A9}</ProjectGuid>

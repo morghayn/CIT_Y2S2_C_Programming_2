@@ -33,7 +33,7 @@ boolean check_guess(interchange* current_interchange, char* guess);
 
 void print_round_summary(node* head);
 
-void store_results();
+void store_results(char file_path[], int incorrect_answers, int question_quantity, int difficulty);
 void release_quiz(node* head);
 
 #endif

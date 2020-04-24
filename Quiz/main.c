@@ -10,15 +10,14 @@ strcat(buffer, "test");
 
 int main(void)
 {
-	// Menu Selection
+	char border_top[] = "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+	char border_bottom[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 	int menu_selection;
 	boolean quit = F;
-	char border_top[] = "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-	char border_bottom[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
 
 	while (quit == F)
 	{
-		printf("> 1. Start\n> 2. Scoreboard\n> 3. Quit\n");
+		printf("\n\n> 1. Start\n> 2. Scoreboard\n> 3. Quit\n");
 		menu_selection = input_number(1, 3, "> Make menu selection [1-3]: ");
 
 		switch (menu_selection)
@@ -29,7 +28,9 @@ int main(void)
 			printf(border_bottom);
 			break;
 		case 2:
+			printf(border_top);
 			print_scoreboard();
+			printf(border_bottom);
 			break;
 		case 3:
 			quit = T;
@@ -59,10 +60,10 @@ void quiz()
 	// Getting file path and then freeing file path once quiz has been built
 	file_path = input_word("> Input file location:\n> \\");
 	head = build_quiz(file_path);
-	free(file_path);
 
 	if (head == NULL)
 	{
+		free(file_path);
 		return;
 	}
 
@@ -96,10 +97,32 @@ void quiz()
 		print_round_summary(head);
 	}
 
+	store_results(file_path, incorrect_answers, question_quantity, difficulty);
 	release_quiz(head);
+	free(file_path);
+	free(question_queue);
 }
 
 void print_scoreboard()
 {
-	printf("Scoreboard");
+	FILE* file;
+	char c;
+	file = fopen("quiz_history.txt", "r");
+
+	if (file == NULL)
+	{
+		printf("\n> Scoreboard file not found. o,,o\n\n");
+		return;
+	}
+
+	c = fgetc(file);
+	printf("\n");
+
+	while (c != EOF)
+	{
+		printf("%c", c);
+		c = fgetc(file);
+	}
+
+	fclose(file);
 }

@@ -185,12 +185,20 @@ void print_round_summary(node* head)
 	}
 }
 
-void store_results()
+void store_results(char file_path[], int incorrect_answers, int question_quantity, int difficulty)
 {
-	// name of the quiz file
-	// number of questions answered correctly
-	// total number of questions
-	// difficulty level
+	const char quiz_file[] = "quiz_history.txt";
+	FILE* file = fopen("quiz_history.txt", "a");
+
+	if (file == NULL)
+	{
+		printf("> Storing the results of the quiz failed! o,,o");
+		return;
+	}
+
+	fprintf(file, "File-name:\t%s\nCorrect:\t%d\nQuestions:\t%d\nDifficulty:\t%d\n\n", file_path, (question_quantity - incorrect_answers), question_quantity, difficulty);
+	printf("\n> Stored quiz results in '%s'.\n", quiz_file);
+	fclose(file);
 }
 
 void release_quiz(node* head)
