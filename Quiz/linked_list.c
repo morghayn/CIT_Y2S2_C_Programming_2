@@ -22,24 +22,21 @@ node* insert_front(node* head, void* data)
 
 node* get_node(node* head, int position)
 {
-	while (position != 0 && head != NULL)
+	// If position greater than length of linked list is passed through, the last item in the linked list will be returned as a safety measure
+	for (int i = 0; i < position && head->next != NULL; i++)
 	{
-		position--;
 		head = head->next;
 	}
-
 	return head;
 }
 
 int length(node* head)
 {
 	int length = 0;
-
 	while (head != NULL)
 	{
 		length++;
 		head = head->next;
 	}
-
 	return length;
 }

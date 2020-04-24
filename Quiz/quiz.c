@@ -5,6 +5,7 @@ interchange* create_interchange(char* question, char* answer)
 	interchange* temp = (interchange*) malloc(sizeof(interchange));
 	if (!temp)
 	{
+		printf("Something has went gravely wrong. o,,o");
 		return NULL;
 	}
 	temp->question = _strdup(question);
@@ -65,11 +66,11 @@ node* build_quiz(const char* filepath)
 
 void initialize_question_queue(int* question_queue, int question_quantity)
 {
-	for (int i = 0; i < question_quantity; question_queue++, i++)
+	for (int i = 0; i < question_quantity; i++)
 	{
-		if (question_queue)
+		if (question_queue + i)
 		{
-			question_queue[i] = i;
+			*(question_queue + i) = i;
 		}
 	}
 	shuffle_array(question_queue, question_quantity);

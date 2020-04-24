@@ -80,11 +80,11 @@ void quiz()
 	printf("> Difficulty '%d' chosen\n\n\n", difficulty);
 
 	// Each interchange is an iteration of this loop
-	for (int i = 0; i < question_quantity; question_queue++, i++)
+	for (int i = 0; i < question_quantity; i++)
 	{
-		if (question_queue)
+		if (question_queue + i)
 		{
-			current_interchange = get_interchange(question_queue[i], head);
+			current_interchange = get_interchange(*(question_queue + i), head);
 			current_clue = generate_clue(difficulty, current_interchange->answer);
 
 			printf("> %s? %s\n", current_interchange->question, current_clue);
