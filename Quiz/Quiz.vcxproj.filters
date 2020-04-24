@@ -57,5 +57,8 @@
     <Text Include="quiz_history.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="quiz_history.txt" />
+    <Text Include="test.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

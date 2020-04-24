@@ -2,7 +2,11 @@
 
 interchange* create_interchange(char* question, char* answer)
 {
-	interchange* temp = (interchange*)malloc(sizeof(interchange));
+	interchange* temp = (interchange*) malloc(sizeof(interchange));
+	if (!temp)
+	{
+		return NULL;
+	}
 	temp->question = _strdup(question);
 	temp->answer = _strdup(answer);
 	temp->correct = F;
@@ -32,7 +36,6 @@ node* build_quiz(const char* filepath)
 	FILE* file;
 
 	fopen_s(&file, filepath, "r");
-
 	if (file == NULL)
 	{
 		printf("\n> File does not exist @ \\%s. Returning to the main menu.\n\n", filepath);
@@ -40,7 +43,7 @@ node* build_quiz(const char* filepath)
 	else
 	{
 		char* q_and_a[2];
-		const size_t line_size = 300;
+		const int line_size = 300;
 		char* line = malloc(line_size);
 
 		while (fgets(line, line_size, file) != NULL)
@@ -60,11 +63,14 @@ node* build_quiz(const char* filepath)
 	return head;
 }
 
-void shuffle_question_queue(int* question_queue, int question_quantity)
+void initialize_question_queue(int* question_queue, int question_quantity)
 {
-	for (int i = 0; i < question_quantity; i++)
+	for (int i = 0; i < question_quantity; question_queue++, i++)
 	{
-		question_queue[i] = i;
+		if (question_queue)
+		{
+			question_queue[i] = i;
+		}
 	}
 	shuffle_array(question_queue, question_quantity);
 }
@@ -77,10 +83,10 @@ interchange* get_interchange(int current_question, node* head)
 // start asking questions
 char* generate_clue(int difficulty, char* current_answer)
 {
-	char* clue;
-	int length = strlen(current_answer);
-	char temp[] = "?";
+	int length = (int) strlen(current_answer);
 	int i, j;
+	char* clue;
+	char temp[] = "?";
 
 	switch (difficulty)
 	{
@@ -133,32 +139,21 @@ char* generate_clue(int difficulty, char* current_answer)
 
 boolean check_guess(interchange* current_interchange, char* guess)
 {
-	int i;
-	int x = 0;
-	boolean is_correct = F;
+	boolean is_correct = T;
 	char* lowercase_guess = _strdup(guess);
 	char* lowercase_answer = _strdup(current_interchange->answer);
 
-	if (strlen(lowercase_answer) == strlen(lowercase_answer))
+	if (strlen(lowercase_answer) == strlen(lowercase_guess))
 	{
-		// -> swap out to utility.c "make_lowercase()" ?? maybe
-		for (i = 0; lowercase_guess[i] != '\0'; i++)
+		for (int i = 0; lowercase_answer[i] != '\0'; i++)
 		{
 			lowercase_guess[i] = tolower(lowercase_guess[i]);
-		}
-		for (i = 0; lowercase_answer[i] != '\0'; i++)
-		{
 			lowercase_answer[i] = tolower(lowercase_answer[i]);
-		}
-		for (i = 0; lowercase_answer[i] != '\0'; i++)
-		{
 			if (lowercase_answer[i] != lowercase_guess[i])
 			{
-				x++;
+				is_correct = F;
 			}
 		}
-
-		is_correct = x == 0 ? T : F;
 	}
 	else
 	{

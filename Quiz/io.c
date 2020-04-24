@@ -25,31 +25,30 @@ int input_number(int lower, int upper, char *message)
 
 char* input_word(char* message)
 {
-	char* string = malloc(1);
-	char* temp;
+	char* string = malloc(1 * sizeof(char));
 	int i = 0;
 	int c;
 
 	printf(message);
-	
+
 	while ((c = getchar()) != '\n' && c != EOF)
 	{
+		if (!string)
+		{
+			free(string);
+			return "Something appears to have gone gravy wrong. o,,o";
+		}
 		string[i++] = c;
+		char* temp;
 		temp = realloc(string, (i * sizeof(char)) + 1);
-
-		// Prevent memory leak
-		if (temp == NULL)
+		if (!temp)
 		{
-			printf("\nExiting!!");
-			free(temp);
-			exit(0);
+			free(string);
+			return "Something appears to have gone gravy wrong. o,,o";
 		}
-		else
-		{
-			string = temp;
-		}
-
+		string = temp;
+		string[i] = '\0';
 	}
-	string[i] = '\0';
+
 	return string;
 }

@@ -26,7 +26,7 @@ boolean split_question(char line[], char* array[]);
 node* build_quiz(const char* filepath);
 
 interchange* get_interchange(int current_question, node* head);
-void shuffle_question_queue(int* question_queue, int question_quantity);
+void initialize_question_queue(int* question_queue, int question_quantity);
 
 char* generate_clue(int difficulty, char* current_answer);
 boolean check_guess(interchange* current_interchange, char* guess);

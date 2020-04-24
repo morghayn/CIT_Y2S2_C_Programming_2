@@ -7,8 +7,8 @@
 
 typedef struct node
 {
-	void* data;
 	struct node* next;
+	void* data;
 } node;
 
 node* create_node(void* data);
@@ -16,8 +16,5 @@ node* insert_front(node* head, void* data);
 node* get_node(node* head, int position);
 
 int length(node* head);
-
-void print_linked_list(node* head);
-void release_linked_list(node* head);
 
 #endif

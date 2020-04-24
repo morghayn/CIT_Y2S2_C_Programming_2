@@ -27,21 +27,22 @@ int main(void)
 			quiz();
 			printf(border_bottom);
 			break;
+
 		case 2:
 			printf(border_top);
 			print_scoreboard();
 			printf(border_bottom);
 			break;
+
 		case 3:
 			quit = T;
 			break;
+
 		default:
 			printf("Something appears to have gone gravely wrong. o,,o");
 			break;
 		}
 	}
-
-	system("pause");
 
 	return 0;
 }
@@ -51,7 +52,6 @@ void quiz()
 	char* file_path;
 	node* head = NULL;
 	int question_quantity;
-	int* question_queue;
 	int difficulty;
 	interchange* current_interchange = NULL;
 	char* current_clue;
@@ -72,24 +72,27 @@ void quiz()
 	printf("> There are exactly '%d' questions in this quiz.\n", question_quantity);
 
 	// Initizializing and shuffling question queue
-	question_queue = (int*)malloc(question_quantity * sizeof(int*)); // Must free when queue is finished
-	shuffle_question_queue(question_queue, question_quantity);
+	int* question_queue = malloc(question_quantity * sizeof(int *)); // Must free when queue is finished
+	initialize_question_queue(question_queue, question_quantity);
 
 	// Setting difficulty
 	difficulty = input_number(1, 6, "> Choose a difficulty [1-6]: ");
 	printf("> Difficulty '%d' chosen\n\n\n", difficulty);
 
 	// Each interchange is an iteration of this loop
-	for (int i = 0; i < question_quantity; i++)
+	for (int i = 0; i < question_quantity; question_queue++, i++)
 	{
-		current_interchange = get_interchange(question_queue[i], head);
-		current_clue = generate_clue(difficulty, current_interchange->answer);
+		if (question_queue)
+		{
+			current_interchange = get_interchange(question_queue[i], head);
+			current_clue = generate_clue(difficulty, current_interchange->answer);
 
-		printf("> %s? %s\n", current_interchange->question, current_clue);
-		incorrect_answers += (check_guess(current_interchange, input_word("\n> Input answer: ")) == 1 ? 0 : 1);
-		printf("> Questions asked: %d\n> Incorrect answers: %d\n\n", i + 1, incorrect_answers);
+			printf("> %s? %s\n", current_interchange->question, current_clue);
+			incorrect_answers += (check_guess(current_interchange, input_word("\n> Input answer: ")) == 1 ? 0 : 1);
+			printf("> Questions asked: %d\n> Incorrect answers: %d\n\n", i + 1, incorrect_answers);
 
-		free(current_clue);
+			free(current_clue);
+		}
 	}
 
 	if (input_number(0, 1, "> Would you like to see a round summary [1 = Yeah; 0 = No]? ") == 1)

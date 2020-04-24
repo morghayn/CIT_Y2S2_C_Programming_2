@@ -4,6 +4,10 @@ node* create_node(void* data)
 {
 	struct node* temp = (node*) malloc(sizeof(node));
 	// printf("> Linked-List: %p\n", temp); /* uncomment for debub output */
+	if (!temp)
+	{
+		return NULL;
+	}
 	temp->next = NULL;
 	temp->data = data;
 	return temp;
@@ -27,12 +31,6 @@ node* get_node(node* head, int position)
 	return head;
 }
 
-/*
-
-TODO maybe add a delete node at n
-
-*/
-
 int length(node* head)
 {
 	int length = 0;
@@ -44,30 +42,4 @@ int length(node* head)
 	}
 
 	return length;
-}
-
-void print_linked_list(node* head)
-{
-	while (head != NULL)
-	{
-		printf("%p->", head);
-		head = head->next;
-	}
-
-	printf("NULL");
-}
-
-void release_linked_list(node* head)
-{
-	struct node* temp;
-	printf("release attempt\n\n"); // TODO remove debug
-
-	while (head != NULL)
-	{
-		printf("release node\n"); // TODO remove debug
-		temp = head;
-		head = head->next;
-		free(temp->data);
-		free(temp);
-	}
 }
