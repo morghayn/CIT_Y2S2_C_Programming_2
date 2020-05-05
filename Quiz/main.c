@@ -1,13 +1,5 @@
 ﻿#include "main.h"
 
-/*
-implement this at some stage
-char* buffer;
-buffer = _getcwd(NULL, 0); // get the current directory
-buffer = (char*)realloc(buffer, 25);
-strcat(buffer, "test");
-*/
-
 int main(void)
 {
 	char border_top[] = "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
